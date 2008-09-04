@@ -18,13 +18,13 @@ then
     exit 1
 fi
 
+#os_release=8
+
 case "$os_release" in
   8*)
-      sdk_dir="/Developer/SDKs/MacOSX10.4u.sdk"
       os_codename="Tiger"
   ;;
   9*)
-      sdk_dir="/Developer/SDKs/MacOSX10.5.sdk"
       os_codename="Leopard"
   ;;
   *)
@@ -32,6 +32,8 @@ case "$os_release" in
       exit 1
   ;;
 esac
+
+sdk_dir="/Developer/SDKs/MacOSX10.4u.sdk"
 
 case "$current_product" in
 
@@ -52,22 +54,7 @@ case "$current_product" in
 
   pkg-config-*) 
       echo "Configuring Universal build of pkg-config for MacFUSE"
-      if [ "$os_codename" = "Leopard" ]
-      then
-          CFLAGS="-O -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc -isysroot $sdk_dir" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
-      else
-          CFLAGS="-O -g -arch i386 -arch ppc -isysroot $sdk_dir" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
-      fi
-  ;;
-
-  *sshfs*) 
-      echo "Configuring Universal build of sshfs for MacFUSE"
-      if [ "$os_codename" = "Leopard" ]
-      then
-          CFLAGS="-D__FreeBSD__=10 -DDARWIN_SEMAPHORE_COMPAT -DSSH_NODELAY_WORKAROUND -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.5.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
-      else
-          CFLAGS="-D__FreeBSD__=10 -DDARWIN_SEMAPHORE_COMPAT -DSSH_NODELAY_WORKAROUND -D_POSIX_C_SOURCE=200112L -O -g -arch i386 -arch ppc -isysroot /Developer/SDKs/MacOSX10.4u.sdk" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
-      fi
+      CFLAGS="-O -g -arch i386 -arch ppc -isysroot $sdk_dir" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
   ;;
 
   *)
