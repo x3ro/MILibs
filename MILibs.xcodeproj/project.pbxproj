@@ -35,6 +35,20 @@
 			remoteGlobalIDString = A81580E20F73D41000862AEC /* Configure glib */;
 			remoteInfo = "Configure glib";
 		};
+		A81581430F73F14800862AEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A81580990F73BC5500862AEC /* Build pkg-config */;
+			remoteInfo = "Build pkg-config";
+		};
+		A81581450F73F14800862AEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A81581030F73E3D700862AEC /* "Install" gettext */;
+			remoteInfo = "\"Install\" gettext";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -12942,6 +12956,8 @@
 			buildToolPath = /usr/bin/make;
 			buildWorkingDirectory = "glib-2.15.4";
 			dependencies = (
+				A81581440F73F14800862AEC /* PBXTargetDependency */,
+				A81581460F73F14800862AEC /* PBXTargetDependency */,
 			);
 			name = "Configure glib";
 			passBuildSettingsInEnvironment = 1;
@@ -13020,6 +13036,16 @@
 			isa = PBXTargetDependency;
 			target = A81580E20F73D41000862AEC /* Configure glib */;
 			targetProxy = A81581300F73E96E00862AEC /* PBXContainerItemProxy */;
+		};
+		A81581440F73F14800862AEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A81580990F73BC5500862AEC /* Build pkg-config */;
+			targetProxy = A81581430F73F14800862AEC /* PBXContainerItemProxy */;
+		};
+		A81581460F73F14800862AEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A81581030F73E3D700862AEC /* "Install" gettext */;
+			targetProxy = A81581450F73F14800862AEC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
