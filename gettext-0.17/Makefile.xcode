@@ -1,9 +1,18 @@
 SDK_DIR=/Developer/SDKs/MacOSX10.4u.sdk
+MAKEFILE=$(abspath $(BUILD_ROOT)/gettext-build/Makefile)
 
-all:	Makefile
+all:	$(MAKEFILE)
 
-Makefile:	Makefile.xcode configure Makefile.in
-	CC=gcc-4.0 PATH="$(PROJECT_DIR)/sed-4.2/sed:$(PATH)" CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc -isysroot $(SDK_DIR)" LDFLAGS="-Wl,-syslibroot,$(SDK_DIR) -arch i386 -arch ppc -fno-common" ./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --with-libiconv-prefix=$(SDK_DIR)/usr
+$(MAKEFILE):	Makefile.xcode configure Makefile.in
+	rm -rf "$(BUILD_ROOT)"/gettext-build
+	mkdir -p "$(BUILD_ROOT)"/gettext-build
+	ditto ./ "$(BUILD_ROOT)"/gettext-build
+	(cd "$(BUILD_ROOT)"/gettext-build && \
+		CC=gcc-4.0 \
+		PATH="$(BUILD_ROOT)/sed-build/sed:$(PATH)" \
+		CFLAGS="-O0 -g -D_POSIX_C_SOURCE=200112L -arch i386 -arch ppc -isysroot $(SDK_DIR)" \
+		LDFLAGS="-Wl,-syslibroot,$(SDK_DIR) -arch i386 -arch ppc -fno-common" \
+		./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --with-libiconv-prefix=$(SDK_DIR)/usr)
 
 clean:
 	echo "warning: gettext not cleaned. if you really want to clean MILib, do a git reset/git clean of your MILibs."

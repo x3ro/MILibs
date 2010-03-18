@@ -1,9 +1,19 @@
 SDK_DIR=/Developer/SDKs/MacOSX10.4u.sdk
+MAKEFILE=$(abspath $(BUILD_ROOT)/pkg-config-build/Makefile)
 
-all:	Makefile
+all:	$(MAKEFILE)
 
-Makefile:	Makefile.xcode configure Makefile.in config.h.in
-	CC=gcc-4.0 CFLAGS="-O -g -arch i386 -arch ppc -isysroot $(SDK_DIR)" LDFLAGS="-arch i386 -arch ppc" ./configure --prefix=/usr/local --disable-dependency-tracking
+$(MAKEFILE):	Makefile.xcode configure Makefile.in config.h.in
+	# make us a little safe place in the woods to build in
+	rm -rf "$(BUILD_ROOT)/pkg-config-build"
+	mkdir -p "$(BUILD_ROOT)/pkg-config-build"
+	ditto ./ "$(BUILD_ROOT)/pkg-config-build"
+	# now go in and build there
+	(cd "$(BUILD_ROOT)/pkg-config-build" && \
+		CC=gcc-4.0 \
+		CFLAGS="-O -g -arch i386 -arch ppc -isysroot $(SDK_DIR)" \
+		LDFLAGS="-arch i386 -arch ppc" \
+		./configure --prefix=/usr/local --disable-dependency-tracking)
 
 clean:
 	echo "warning: pkg-config not cleaned. if you really want to clean MILib, do a git reset/git clean of your MILibs."
