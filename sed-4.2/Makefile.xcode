@@ -1,5 +1,9 @@
 MAKEFILE=$(abspath $(BUILD_ROOT)/sed-build/Makefile)
 ARCH_FLAGS=$(patsubst %, -arch %,$(ARCHS))
+CC=gcc-4.2
+CFLAGS=-O0 -g $(ARCH_FLAGS) -isysroot $(SDKROOT)
+LDFLAGS=-Wl,-syslibroot,$(SDKROOT) $(ARCH_FLAGS) -fno-common
+
 
 all:	$(MAKEFILE)
 
@@ -7,11 +11,11 @@ $(MAKEFILE):	Makefile.xcode configure Makefile.in
 	rm -rf "$(BUILD_ROOT)"/sed-build
 	mkdir -p "$(BUILD_ROOT)"/sed-build
 	ditto ./ "$(BUILD_ROOT)"/sed-build
-	(cd "$(BUILD_ROOT)"/sed-build && \
-		CC=gcc-4.2 \
-		CFLAGS="-O0 -g $(ARCH_FLAGS) -isysroot $(SDKROOT)" \
-		LDFLAGS="-Wl,-syslibroot,$(SDKROOT) $(ARCH_FLAGS) -fno-common" \
-		./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --with-libiconv-prefix=$(SDKROOT)/usr)
+	make -C "$(BUILD_ROOT)"/sed-build -f Makefile.xcode real-configure
+
+.PHONY: real-configure
+real-configure:
+	CC="$(CC)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --with-libiconv-prefix=$(SDKROOT)/usr
 
 clean:
 	echo "warning: sed not cleaned. if you really want to clean MILib, do a git reset/git clean of your MILibs."

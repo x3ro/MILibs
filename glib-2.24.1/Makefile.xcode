@@ -33,18 +33,21 @@ $(MAKEFILE):	Makefile.xcode configure Makefile.in config.h.in
 	rm -rf "$(BUILD_ROOT)"/glib-build
 	mkdir -p "$(BUILD_ROOT)"/glib-build
 	ditto ./ "$(BUILD_ROOT)"/glib-build
-	(cd "$(BUILD_ROOT)"/glib-build && \
-		CC=$(CC) \
-		PATH=$(PATH) \
-		CFLAGS="$(CFLAGS)" \
-		LDFLAGS="$(LDFLAGS)" \
-		./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --enable-static && \
-		if [ "x$(ARCH)" == "xpowerpc" ]; then \
-			mv config.h config.h.wrong ;\
-			cat config.h.wrong | sed -e "s|#define G_ATOMIC_POWERPC 1||" > config.h ;\
-			mv libtool libtool.wrong ;\
-			cat libtool.wrong | sed -e "s|sys_lib_search_path_spec=.*|sys_lib_search_path_spec=\"/Developer/SDKs/MacOSX10.4u.sdk/usr/lib\"|g" > libtool ;\
-		fi)
+	make -C "$(BUILD_ROOT)"/glib-build -f Makefile.xcode real-configure
+	
+.PHONY: real-configure
+real-configure:
+	CC="$(CC)" \
+	PATH="$(PATH)" \
+	CFLAGS="$(CFLAGS)" \
+	LDFLAGS="$(LDFLAGS)" \
+	./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --enable-static
+	if [ "x$(ARCH)" == "xpowerpc" ]; then \
+		mv config.h config.h.wrong ;\
+		cat config.h.wrong | sed -e "s|#define G_ATOMIC_POWERPC 1||" > config.h ;\
+		mv libtool libtool.wrong ;\
+		cat libtool.wrong | sed -e "s|sys_lib_search_path_spec=.*|sys_lib_search_path_spec=\"/Developer/SDKs/MacOSX10.4u.sdk/usr/lib\"|g" > libtool ;\
+	fi
 
 clean:
 	echo "warning: glib not cleaned. if you really want to clean MILib, do a git reset/git clean of your MILibs."

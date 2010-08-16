@@ -1,5 +1,8 @@
 MAKEFILE=$(abspath $(BUILD_ROOT)/pkg-config-build/Makefile)
 ARCH_FLAGS=$(patsubst %, -arch %,$(ARCHS))
+CC=gcc-4.2
+CFLAGS=-O -g $(ARCH_FLAGS) -isysroot $(SDKROOT)
+LDFLAGS=$(ARCH_FLAGS)
 
 all:	$(MAKEFILE)
 
@@ -8,12 +11,14 @@ $(MAKEFILE):	Makefile.xcode configure Makefile.in config.h.in
 	rm -rf "$(BUILD_ROOT)/pkg-config-build"
 	mkdir -p "$(BUILD_ROOT)/pkg-config-build"
 	ditto ./ "$(BUILD_ROOT)/pkg-config-build"
-	# now go in and build there
-	(cd "$(BUILD_ROOT)/pkg-config-build" && \
-		CC=gcc-4.2 \
-		CFLAGS="-O -g $(ARCH_FLAGS) -isysroot $(SDKROOT)" \
-		LDFLAGS="$(ARCH_FLAGS)" \
-		./configure --prefix=/usr/local --disable-dependency-tracking)
+	make -C "$(BUILD_ROOT)/pkg-config-build" -f Makefile.xcode real-configure
+
+.PHONY:	real-configure
+real-configure:
+	CC="$(CC)" CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure --prefix=/usr/local --disable-dependency-tracking
 
 clean:
 	echo "warning: pkg-config not cleaned. if you really want to clean MILib, do a git reset/git clean of your MILibs."
+
+	# now go in and build there
+	(cd "$(BUILD_ROOT)/pkg-config-build" && \
