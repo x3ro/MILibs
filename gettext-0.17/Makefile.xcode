@@ -13,6 +13,7 @@ $(MAKEFILE):	Makefile.xcode configure Makefile.in
 	rm -rf "$(BUILD_ROOT)"/gettext-build
 	mkdir -p "$(BUILD_ROOT)"/gettext-build
 	ditto ./ "$(BUILD_ROOT)"/gettext-build
+	touch "$(BUILD_ROOT)"/gettext-build/gettext-runtime/po/*
 	make -C "$(BUILD_ROOT)"/gettext-build -f Makefile.xcode real-configure
 	
 .PHONY:		real-configure
