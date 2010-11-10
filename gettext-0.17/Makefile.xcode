@@ -13,12 +13,11 @@ $(MAKEFILE):	Makefile.xcode configure Makefile.in
 	rm -rf "$(BUILD_ROOT)"/gettext-build
 	mkdir -p "$(BUILD_ROOT)"/gettext-build
 	ditto ./ "$(BUILD_ROOT)"/gettext-build
-	touch "$(BUILD_ROOT)"/gettext-build/gettext-runtime/po/*
+	touch "$(BUILD_ROOT)"/gettext-build/gettext-{runtime,tools}/po/*
 	make -C "$(BUILD_ROOT)"/gettext-build -f Makefile.xcode real-configure
 	
 .PHONY:		real-configure
 real-configure:
-	cd gettext-runtime && \
 	CC="$(CC)" \
 	CXX="$(CXX)" \
 	CFLAGS="$(CFLAGS)" \
