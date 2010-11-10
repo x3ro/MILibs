@@ -14429,7 +14429,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "build/gettext-build";
+			buildWorkingDirectory = "build/gettext-build/gettext-runtime";
 			dependencies = (
 				A81580E00F73C19500862AEC /* PBXTargetDependency */,
 			);
@@ -14460,7 +14460,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = "build/gettext-build";
+			buildWorkingDirectory = "build/gettext-build/gettext-runtime";
 			dependencies = (
 				A81581070F73E3F100862AEC /* PBXTargetDependency */,
 			);

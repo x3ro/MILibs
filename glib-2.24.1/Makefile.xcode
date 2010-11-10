@@ -41,7 +41,10 @@ real-configure:
 	PATH="$(PATH)" \
 	CFLAGS="$(CFLAGS)" \
 	LDFLAGS="$(LDFLAGS)" \
-	./configure --prefix=$(BUILT_PRODUCTS_DIR) --disable-dependency-tracking --enable-static
+	./configure \
+		--prefix=$(BUILT_PRODUCTS_DIR) \
+		--disable-dependency-tracking \
+		--disable-gtk-doc-html
 	if [ "x$(ARCH)" == "xpowerpc" ]; then \
 		mv config.h config.h.wrong ;\
 		cat config.h.wrong | sed -e "s|#define G_ATOMIC_POWERPC 1||" > config.h ;\

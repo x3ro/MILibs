@@ -17,6 +17,7 @@ $(MAKEFILE):	Makefile.xcode configure Makefile.in
 	
 .PHONY:		real-configure
 real-configure:
+	cd gettext-runtime && \
 	CC="$(CC)" \
 	CXX="$(CXX)" \
 	CFLAGS="$(CFLAGS)" \
@@ -26,8 +27,6 @@ real-configure:
 	./configure --prefix=$(BUILT_PRODUCTS_DIR) \
 		--disable-dependency-tracking \
 		--disable-java \
-		--disable-libasprintf \
-		--disable-nls \
 		--with-libiconv-prefix=$(SDK_DIR)/usr
 
 clean:
