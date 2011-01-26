@@ -1,4 +1,5 @@
 # xcode ignores
+.DS_Store
 /build/
 *.xcodeproj/*.pbxuser
 *.xcodeproj/*.perspective*
