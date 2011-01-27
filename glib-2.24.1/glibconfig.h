@@ -288,7 +288,11 @@ typedef gint64 goffset;
   #define GSSIZE_TO_BE(val)	((gssize) GINT32_TO_BE (val))
 #endif
 
-#define G_BYTE_ORDER G_LITTLE_ENDIAN
+#ifdef __BIG_ENDIAN__
+  #define G_BYTE_ORDER G_BIG_ENDIAN
+#else
+  #define G_BYTE_ORDER G_LITTLE_ENDIAN
+#endif
 
 #define GLIB_SYSDEF_POLLIN =1
 #define GLIB_SYSDEF_POLLOUT =4
