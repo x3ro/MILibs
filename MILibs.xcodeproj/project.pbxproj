@@ -13592,7 +13592,6 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "x86_64 i386 ppc";
 			};
 			name = Deployment;
 		};
@@ -13613,7 +13612,6 @@
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "x86_64 i386 ppc";
 			};
 			name = Development;
 		};
